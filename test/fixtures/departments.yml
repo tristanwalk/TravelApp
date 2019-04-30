@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  currentBudget: 1
+  totalBudget: 1
+  name: MyString
+  deptNum: 1
+
+two:
+  currentBudget: 1
+  totalBudget: 1
+  name: MyString
+  deptNum: 1

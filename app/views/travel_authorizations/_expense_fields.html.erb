@@ -1,0 +1,27 @@
+<tr class='nested-fields'>
+    <td><%= form.text_field :expenseName %></td>
+    <td><%= form.number_field :expectedAmount %></td>
+    <td><%= link_to_remove_association "remove expense", form %></td>
+</tr>
+<tr>
+  <td colspan="2">
+            <table class='table'>
+            <thead>
+              <tr>
+                <th>Source</th>
+                <th>Amount</th>
+              </tr>
+            </thead>
+            <tbody class='sources'>
+              <%= form.fields_for :sources do |source| %>
+                <%= render 'source_fields', :form => source %>
+              <% end %>
+            </tbody>
+          </table>
+          <div class='links'>
+              <%= link_to_add_association 'add source', form, :sources, form_name: 'form', data: { association_insertion_method: :before  } %>
+            </div>
+        </td>
+</tr>
+</tr>
+

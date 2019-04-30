@@ -1,0 +1,115 @@
+<%= form_with(model: travel_authorization, local: true) do |form| %>
+    <% if travel_authorization.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(travel_authorization.errors.count, "error") %> prohibited this travel_authorization from being saved:</h2>
+
+        <ul>
+        <% travel_authorization.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+    
+    <h3>Information</h3>
+    <table class="table table-striped">
+      <tr>
+        <th><%= form.label :firstName  %></th>
+        <td><%= form.text_field :firstName %></td>
+        <th><%= form.label :lastName  %></th>
+        <td><%= form.text_field :lastName  %></td>
+        <th><%= form.label :empID  %></th>
+        <td><%= form.number_field :empID  %></td>
+      </tr>
+      <tr>
+        <th><%= form.label :tripNum  %></th>
+        <td><%= form.number_field :tripNum  %></td>
+        <th><%= form.label :deptNum  %></th>
+        <td><%= form.number_field :deptNum  %></td>
+        <th><%= form.label :formNum  %></th>
+        <td><%= form.number_field :formNum  %></td>
+      </tr>
+      <tr>
+        <th><%= form.label :departDate  %></th>
+        <td><%= form.date_select :departDate  %></td>
+        <th><%= form.label :returnDate  %></th>
+        <td><%= form.date_select :returnDate  %></td>
+        <th><%= form.label :destination  %></th>
+        <td><%= form.text_field :destination  %></td>
+      </tr>
+      <tr>
+        <th width="10%"><%= form.label :purpose  %></th>
+        <td colspan="3"><%= form.text_field :purpose, class: "width1"; %></td>
+      </tr>
+    </table>
+<!--
+    <div class="field">
+      <%= form.label :firstName  %>
+      <%= form.text_field :firstName %>
+    </div>
+    <div class="field">
+      <%= form.label :lastName  %>
+      <%= form.text_field :lastName  %>
+    </div>
+    <div class="field">
+      <%= form.label :empID  %>
+      <%= form.number_field :empID  %>
+    </div>
+    <div class="field">
+      <%= form.label :tripNum  %>
+      <%= form.number_field :tripNum  %>
+    </div>
+    <div class="field">
+      <%= form.label :deptNum  %>
+      <%= form.number_field :deptNum  %>
+    </div>
+    <div class="field">
+      <%= form.label :formNum  %>
+      <%= form.number_field :formNum  %>
+    </div>
+    <div class="field">
+      <%= form.label :departDate  %>
+      <%= form.date_select :departDate  %>
+    </div>
+    <div class="field">
+      <%= form.label :returnDate  %>
+      <%= form.date_select :returnDate  %>
+    </div>
+    <div class="field">
+      <%= form.label :destination  %>
+      <%= form.text_field :destination  %>
+    </div>
+    <div class="field">
+      <%= form.label :purpose  %>
+      <%= form.text_field :purpose  %>
+    </div>
+    <br>
+    -->
+		<h3>Expenses</h3>
+      <table class='table'>
+      <thead class="thead-dark">
+        <tr>
+          <th>Expense</th>
+          <th>Expected Amount</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      
+      <tbody class='expenses' id='expenses'>
+        <div>
+        <%= form.fields_for :expenses do |expense| %>
+          <%= render 'expense_fields', :form => expense %>
+        <% end %>
+        </div>
+      </tbody>
+      
+    </table>
+    <div class='links'>
+        <%= link_to_add_association 'add expense', form, :expenses, form_name: 'form', data: { association_insertion_method: :before } %>
+      </div>
+      <br>
+    <br>
+    <div class="actions">
+      <%= form.submit %>
+    </div>
+  <% end %>

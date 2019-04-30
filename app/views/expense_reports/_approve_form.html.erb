@@ -1,0 +1,150 @@
+<%= form_with(model: expense_report, local: true) do |form| %>
+    <% if expense_report.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(expense_report.errors.count, "error") %> prohibited this expense_report from being saved:</h2>
+
+        <ul>
+        <% expense_report.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+  <p>
+    <strong>Tripnum:</strong>
+    <%= @expense_report.tripNum %>
+  </p>
+
+  <p>
+    <strong>Formnum:</strong>
+    <%= @expense_report.formNum %>
+  </p>
+
+  <p>
+    <strong>Firstname:</strong>
+    <%= @expense_report.firstName %>
+  </p>
+
+  <p>
+    <strong>Lastname:</strong>
+    <%= @expense_report.lastName %>
+  </p>
+
+  <p>
+    <strong>Employee Id:</strong>
+    <%= @expense_report.empID %>
+  </p>
+
+  <p>
+    <strong>Dept Number:</strong>
+    <%= @expense_report.deptNum %>
+  </p>
+
+  <p>
+    <strong>Depart Date:</strong>
+    <%= @expense_report.departDate %>
+  </p>
+
+  <p>
+    <strong>Return Date:</strong>
+    <%= @expense_report.returnDate %>
+  </p>
+
+  <p>
+    <strong>Destination:</strong>
+    <%= @expense_report.destination %>
+  </p>
+
+  <p>
+    <strong>Purpose:</strong>
+    <%= @expense_report.purpose %>
+  </p>
+
+  <p>
+    <strong>Status:</strong>
+    <%= @expense_report.status %>
+  </p>
+
+  <% if current_account && current_account.accountable_type == "BudgetApprover" %>
+    <p>
+        <h3>Expenses</h3>
+        <table class='table'>
+        <thead>
+          <tr>
+            <th>Expense</th>
+            <th>Expected Amount</th>
+            <th>Actual Amount</th>
+          </tr>
+        </thead>
+        <tbody class='expenses'>
+          <div>
+          <%= form.fields_for :expenses do |expense| %>
+            <%= render 'approve_expense_fields', :form => expense %>
+          <% end %>
+        </div>
+        </tbody>
+      </table>
+    </p>
+  <% end %>
+
+  <% if current_account && current_account.accountable_type == "PaymentManager" %>
+    <p>
+      <strong>Expenses:</strong>
+      <table class="table">
+        <tr>
+          <th>Expense Name</th>
+          <th>Estimated Amount</th>
+          <th>Actual Amount</th>
+          <th>Status</th>
+          <th>Receipt</th>
+        </tr>
+        <% @expenses.each do |expense| %>
+          <tr>
+            <td><%= expense.expenseName %></td>
+            <td><%= expense.expectedAmount %></td>
+            <td><%= expense.actualAmount %></td>
+            <td><%= expense.approval %></td>
+            <% @receipts.each do |receipt| %>
+              <% if receipt.expense_id == expense.id %>
+                <td><a href="<%= receipt.image_url %>"><%= image_tag(receipt.image_url.url, width: 200) if receipt.image_url.present? %></a></td>
+              <% end %>
+            <% end %>
+          </tr>
+          <tr>
+            <th>Source Name</th>
+            <th>Amount</th>
+            <th>Status</th>
+          </tr>
+          <tr>
+            <% @sources.each do |source| %>
+              <tr>
+                <% if source.expense_id == expense.id %>
+                  <td><%= source.department %></td>
+                  <td><%= source.amount %></td>
+                  <td><%= source.approval %></td>
+                <% end %>
+              </tr>
+            <% end %>
+          </tr>
+        <% end %>
+      </table>
+    </p>
+    <p>
+      <strong>Status:</strong>
+        <%= form.select :status, TravelAuthorization::STATUS_TYPES %></td>
+    </p>
+  <% end %>
+    <p>
+      <strong>Created at:</strong>
+      <%= expense_report.created_at %>
+      </p>
+
+    <p>
+      <strong>Last Updated:</strong>
+      <%= expense_report .updated_at %>
+    </p>
+    <div class="actions">
+        <%= form.submit %>
+    </div>
+<% end %>

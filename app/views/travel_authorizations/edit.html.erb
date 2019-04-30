@@ -1,0 +1,9 @@
+<h1>Editing Travel Authorization</h1>
+<% if current_account && current_account.accountable_type == "Employee"%>
+<%= render 'form', travel_authorization: @travel_authorization %>
+<% elsif current_account && current_account.accountable_type == "BudgetApprover"  ||current_account && current_account.accountable_type == "PaymentManager"%>
+<%= render 'approve_form', travel_authorization: @travel_authorization %>
+<% end %>
+
+<%= link_to 'Show', @travel_authorization %> |
+<%= link_to 'Back', travel_authorizations_path %>

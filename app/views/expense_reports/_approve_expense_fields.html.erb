@@ -1,0 +1,41 @@
+<tr class='nested-fields'>
+    <td><%= form.text_field :expenseName, :readonly => true %></td>
+    <td><%= form.number_field :expectedAmount, :readonly => true %></td>
+    <td><%= form.number_field :actualAmount, :readonly => true %></td>
+        <td><%= form.text_field :approval, :readonly => true %></td>
+</tr>
+<tr>
+    <td colspan="3">
+            <table class='table'>
+            <thead>
+              <tr>
+                <th>Receipt</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody class='receipts'>
+              <%= form.fields_for :receipts do |receipt| %>
+                <%= render 'receipt_fields', :form => receipt %>
+              <% end %>
+            </tbody>
+          </table>
+        </td>
+</tr>
+<tr>
+	<td colspan="3">
+	<table class="table">
+      <thead>
+        <tr>
+          <th>Source</th>
+          <th>Amount</th>
+            <th>Action</th>
+        </tr>
+      </thead>
+      <tbody class='sources'>
+        <%= form.fields_for :sources do |source| %>
+          <%= render 'approve_source_fields', :form => source %>
+        <% end %>
+      </tbody>
+  </table>
+</td>
+</tr>

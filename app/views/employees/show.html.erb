@@ -1,0 +1,46 @@
+<% if notice %>
+<aside id="notice"><%= notice %></aside>
+<% end %>
+
+<p>
+  <strong>Firstname:</strong>
+  <%= @employee.firstName %>
+</p>
+
+<p>
+  <strong>Lastname:</strong>
+  <%= @employee.lastName %>
+</p>
+
+<p>
+  <strong>Username:</strong>
+  <%= @employee.username %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @employee.email %>
+</p>
+
+<p>
+  <strong>Password:</strong>
+  <%= @employee.password %>
+</p>
+
+<p>
+  <strong>Forms:</strong>
+  <%= @employee.forms %>
+</p>
+
+<p>
+  <strong>Empid:</strong>
+  <%= @employee.empID %>
+</p>
+
+<p>
+  <strong>Deptnum:</strong>
+  <%= @employee.deptNum %>
+</p>
+
+<%= link_to 'Edit', edit_employee_path(@employee) %> |
+<%= link_to 'Back', employees_path %>

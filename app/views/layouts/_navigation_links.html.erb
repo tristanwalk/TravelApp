@@ -1,0 +1,49 @@
+<% if account_signed_in? %>
+	<% if current_account.accountable_type == "SuperAccount" %>
+		<li>
+    		<%= link_to 'Admin Dashboard', admin_root_path, :method=>'get', class:"nav-link" %>
+  		</li>
+		<li >
+    		<%= link_to 'Sign out', destroy_account_session_path, :method=>'get', class:"nav-link" %>
+  		</li>
+
+			<% else %>
+				<li class="nav-item">
+					<%= link_to 'Home', home_index_path(spa: true), class: "nav-link"  %>
+				</li>
+				<li class="nav-item">
+					<%= link_to 'Travel Authorizations', travel_authorizations_path(spa: true), class: "nav-link"  %>
+				</li>
+				<li class="nav-item">
+					<%= link_to 'Expense Reports', expense_reports_path(spa: false), class: "nav-link"  %>
+				</li>
+				<li class="nav-item">
+					<%= link_to 'Data Analysis', data_index_path(spa: false), class: "nav-link"  %>
+				</li>
+			 	<li class="nav-item dropdown">
+			    	<a class="nav-link dropdown-toggle" href="#" id="editAccountDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			      	Edit Settings (<%= (current_account.accountable.firstName.nil? or current_account.accountable.firstName == "") ? "No Name" : current_account.accountable.firstName %>)
+	    	</a>
+	    	<div class="dropdown-menu" aria-labelledby="editAccountDropdownMenuLink">
+	      		<% if current_account.accountable_type == "Employee" %>
+	        		<%= link_to 'Employee Profile', edit_employee_path(current_account.accountable_id), class: "dropdown-item" %>
+        		<% elsif current_account.accountable_type == "Payment Manager" %>
+	        		<%= link_to 'Payment Manager Profile', edit_payment_manager_path(current_account.accountable_id), class: "dropdown-item"  %> 
+        		<% else %>
+	        		<%= link_to 'Budget Approver Profile', edit_budget_approver_path(current_account.accountable_id), class: "dropdown-item"  %>
+	      		<% end %>
+	      		<%= link_to 'Account Settings', edit_account_registration_path, class: "dropdown-item"  %>
+	    	</div>
+	  	</li>
+		<li>
+    		<%= link_to 'Sign out', destroy_account_session_path, :method=>'get', class:"nav-link" %>
+	  	</li>
+	<% end %>
+<% else %>
+  	<li>
+   		<%= link_to 'Sign in', new_account_session_path, class:"nav-link" %>
+	</li>
+	<li>
+		<%= link_to 'Sign up', new_account_registration_path,  class:"nav-link" %>
+  	</li>
+<% end %>

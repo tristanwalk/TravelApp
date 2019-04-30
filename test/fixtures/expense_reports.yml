@@ -1,0 +1,35 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+   reciepts: MyText
+  tripNum: 1
+  firstName: MyString
+  lastName: MyString
+  empID: 1
+  deptNum: 1
+  formNum: 1
+  deptDate: 2019-03-25
+  submissionTime: 2019-03-25 21:24:44
+  destination: MyText
+  purpose: MyString
+  expenses: MyText
+  sources: MyText
+  status: false
+  updateTime: 2019-03-25 21:24:44
+
+two:
+   reciepts: MyText
+  tripNum: 1
+  firstName: MyString
+  lastName: MyString
+  empID: 1
+  deptNum: 1
+  formNum: 1
+  deptDate: 2019-03-25
+  submissionTime: 2019-03-25 21:24:44
+  destination: MyText
+  purpose: MyString
+  expenses: MyText
+  sources: MyText
+  status: false
+  updateTime: 2019-03-25 21:24:44

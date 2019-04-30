@@ -1,0 +1,11 @@
+<tr class='nested-fields'>
+<% if current_account && current_account.accountable_type == "BudgetApprover"%>
+    <td><%= form.text_field :department, :readonly => true  %></td>
+    <td><%= form.number_field :amount, :readonly => true  %></td>
+    <td><%= form.select :approval, ExpenseReport::STATUS_TYPES %></td>
+<% else %>
+    <td><%= form.text_field :department %></td>
+    <td><%= form.number_field :amount %></td>
+    <td><%= link_to_remove_association "remove source", form %></td>
+    <% end %>
+</tr>

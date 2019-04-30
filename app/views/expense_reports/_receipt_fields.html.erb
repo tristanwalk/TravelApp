@@ -1,0 +1,9 @@
+<tr class='nested-fields'>
+	    <% if current_account && current_account.accountable_type == "Employee"%>
+	<td></td>
+    <td><%= form.file_field :image_url %></td>
+
+    <td><%= link_to_remove_association "remove receipt", form %></td>
+    <% end %>
+
+</tr>

@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Currentbudget:</strong>
+  <%= @department.currentBudget %>
+</p>
+
+<p>
+  <strong>Totalbudget:</strong>
+  <%= @department.totalBudget %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @department.name %>
+</p>
+
+<p>
+  <strong>Deptnum:</strong>
+  <%= @department.deptNum %>
+</p>
+
+<%= link_to 'Edit', edit_department_path(@department) %> |
+<%= link_to 'Back', departments_path %>

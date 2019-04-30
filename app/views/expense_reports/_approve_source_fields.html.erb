@@ -1,0 +1,5 @@
+<tr class='nested-fields'>
+    <td><%= form.text_field :department, :readonly => true  %></td>
+    <td><%= form.number_field :amount, :readonly => true  %></td>
+    <td><%= form.select :approval, ExpenseReport::STATUS_TYPES %></td>
+</tr>

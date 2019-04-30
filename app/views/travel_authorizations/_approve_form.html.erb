@@ -1,0 +1,137 @@
+<%= form_with(model: travel_authorization, local: true) do |form| %>
+    <% if travel_authorization.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(travel_authorization.errors.count, "error") %> prohibited this travel_authorization from being saved:</h2>
+
+        <ul>
+        <% travel_authorization.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <p>
+  <strong>Tripnum:</strong>
+  <%= travel_authorization.tripNum %>
+</p>
+
+<p>
+  <strong>Form number:</strong>
+  <%= travel_authorization.formNum %>
+</p>
+
+<p>
+  <strong>First name:</strong>
+  <%= travel_authorization.firstName %>
+</p>
+
+<p>
+  <strong>Last name:</strong>
+  <%= travel_authorization.lastName %>
+</p>
+
+<p>
+  <strong>Employee Id:</strong>
+  <%= travel_authorization.empID %>
+</p>
+
+<p>
+  <strong>Dept Number:</strong>
+  <%= travel_authorization.deptNum %>
+</p>
+
+<p>
+  <strong>Depart Date:</strong>
+  <%= travel_authorization.departDate %>
+</p>
+
+<p>
+  <strong>Return Date:</strong>
+  <%= travel_authorization.returnDate %>
+</p>
+
+<p>
+  <strong>Destination:</strong>
+  <%= travel_authorization.destination %>
+</p>
+
+<p>
+  <strong>Purpose:</strong>
+  <%= travel_authorization.purpose %>
+</p>
+
+<p>
+  <strong>Comments</strong>
+  <%= travel_authorization.comment %>
+</p>
+
+<% if current_account && current_account.accountable_type == "BudgetApprover" %>
+<p>
+  <h3>Expenses</h3>
+      <table class='table'>
+      <thead>
+        <tr>
+          <th>Expense</th>
+          <th>Expected Amount</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      
+      <tbody class='expenses' id='expenses'>
+        <%= form.fields_for :expenses do |expense| %>
+          <%= render 'approve_expense_fields', :form => expense %>
+        <% end %>
+      </tbody>
+    </table>
+</p>
+<% elsif current_account && current_account.accountable_type == "PaymentManager" %>
+<p>
+    <table>
+      <tr>
+        <th>Expense Name</th>
+        <th>Estimated Amount</th>
+        <th>Status</th>
+      </tr>
+      <% @expenses.each do |expense| %>
+        <tr>
+          <td><%= expense.expenseName %></td>
+          <td><%= expense.expectedAmount %></td>
+          <td><%= expense.approval %></td>
+      </tr>
+      <tr>
+        <th>Source Name</th>
+        <th>Amount</th>
+        <th>Status</th>
+    </tr>
+    <tr>
+          <% @sources.each do |source| %>
+          <tr>
+            <% if source.expense_id == expense.id %>
+              <td><%= source.department %></td>
+              <td><%= source.amount %></td>
+              <td><%= source.approval %></td>
+            <% end %>
+          </tr>
+          <% end %>
+        </tr>
+      <% end %>
+    </table>
+</p>
+<p>
+  <strong>Status:</strong>
+    <%= form.select :status, TravelAuthorization::STATUS_TYPES %></td>
+</p>
+<% end %>
+<p>
+  <strong>Created at:</strong>
+  <%= travel_authorization.created_at %>
+</p>
+
+<p>
+  <strong>Last Updated:</strong>
+  <%= travel_authorization.updated_at %>
+</p>
+    <div class="actions">
+      <%= form.submit %>
+    </div>
+<% end %>

@@ -1,0 +1,80 @@
+<style type="text/css">
+  html{
+    margin: auto;
+  }
+
+  main{
+    margin-top: 30px;    
+  }
+
+  h1, h2{
+    text-align: left;
+    font-family: Impact, Charcoal, sans-serif;
+    margin-left: 5%;
+  }
+
+  .center{
+    text-align: center;
+  }
+
+  table {
+    text-align: center;
+    margin: auto;
+    font-size:12px;
+  }  
+
+  th{
+    border-right-color: white; 
+    border-right: solid; 
+  }
+
+</style>
+<div class=center>
+<% if notice %>
+<aside id="notice"><%= notice %></aside>
+<% end %>
+
+<h1>Expense Reports</h1>
+
+<table class="table table-striped" style="width: 90%;">
+  <thead class="thead-dark">
+    <tr>
+      <th class="align-middle">Trip Number</th>
+      <th class="align-middle">Form Number</th>
+      <th class="align-middle">Departure Date</th>
+      <th class="align-middle">Return Date</th>
+      <th class="align-middle">Destination</th>
+      <th class="align-middle">Purpose</th>
+      <th class="align-middle">Status</th>
+      <th class="align-middle">Submission Time</th>
+      <th class="align-middle">Last Updated</th>
+      <th class="align-middle" colspan="3">Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @expense_reports.each do |expense_report| %>
+    <% if expense_report.empID == current_account.empID %>
+        <tr>
+          <td><%= expense_report.tripNum %></td>
+          <td><%= expense_report.formNum %></td>
+          <td><%= expense_report.departDate %></td>
+          <td><%= expense_report.returnDate %></td>
+          <td><%= expense_report.destination %></td>
+          <td><%= expense_report.purpose %></td>
+          <td><%= expense_report.status %></td>
+          <td><%= expense_report.created_at %></td>
+          <td><%= expense_report.updated_at %></td>
+          <td><%= link_to 'Show', expense_report %></td>
+          <td><%= link_to 'Edit', edit_expense_report_path(expense_report) %></td>
+          <td><%= link_to 'Destroy', expense_report, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Expense Report', new_expense_report_path %>
+</div>

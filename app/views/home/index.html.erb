@@ -1,0 +1,277 @@
+<style type="text/css">
+  html{
+    margin: auto;
+  }
+
+  main{
+    margin-top: 30px;    
+  }
+
+  h1, h2{
+    text-align: left;
+    font-family: Impact, Charcoal, sans-serif;
+    margin-left: 5%;
+  }
+
+  .center{
+    text-align: center;
+  }
+
+  table {
+    text-align: center;
+    margin: auto;
+    font-size:12px;
+  }  
+
+  th{
+    border-right-color: white; 
+    border-right: solid; 
+  }
+
+</style>
+
+<div class=center>
+  <% if notice %>
+  <aside id="notice"><%= notice %></aside>
+  <% end %>
+
+  <h1>Home</h1>
+  <% if current_account && current_account.accountable_type != "SuperAccount"%>
+  <h3 style="text-align: left; margin-left: 5%; margin-top: 0;">Welcome <%= current_account.accountable.firstName %>!</h3> 
+  <% end %>
+
+  <h5 style="text-align: left; margin-left: 5%; color: skyblue; margin-top: 0;"><%= current_account.accountable_type %></h5>
+  <% if current_account && current_account.accountable_type != "SuperAccount"%>
+    <br>
+
+  <h2>Travel Authorizations</h2>
+
+  <table class="table table-striped" style="width: 90%;">
+    <thead class="thead-dark">
+      <tr>
+        <th class="align-middle">Trip Number</th>
+        <th class="align-middle">Form Number</th>
+        <th class="align-middle">Departure Date</th>
+        <th class="align-middle">Return Date</th>
+        <th class="align-middle">Destination</th>
+        <th class="align-middle">Purpose</th>
+        <th class="align-middle">Status</th>
+        <th class="align-middle">Submission Time</th>
+        <th class="align-middle">Last Updated</th>
+        <!--<th colspan="3">Action</th> -->
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @travel_authorizations.each do |travel_authorization| %>
+        <% if travel_authorization.empID == current_account.empID %>
+          <tr>
+            <td><%= travel_authorization.tripNum  %></td>
+            <td><%= travel_authorization.formNum  %></td>
+            <td><%= travel_authorization.departDate  %></td>
+            <td><%= travel_authorization.returnDate  %></td>
+            <td><%= travel_authorization.destination  %></td>
+            <td><%= travel_authorization.purpose  %></td>
+            <td><%= travel_authorization.status  %></td>
+            <td><%= travel_authorization.created_at  %></td>
+            <td><%= travel_authorization.updated_at  %></td>
+     <!--
+            <td><%= link_to 'Show', travel_authorization %></td>
+            <td><%= link_to 'Edit', edit_travel_authorization_path(travel_authorization) %></td>
+            <td><%= link_to 'Destroy', travel_authorization, method: :delete, data: { confirm: 'Are you sure?' } %></td> -->
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+
+  <br>
+<!--
+  <%= link_to 'New Travel Authorization', new_travel_authorization_path %> -->
+    <br>
+    <br>
+    <h2>Expense Reports</h2>
+
+  <table class="table table-striped" style="width: 90%;">
+    <thead class="thead-dark">
+      <tr>
+        <th class="align-middle">Trip Number</th>
+        <th class="align-middle">Form Number</th>
+        <th class="align-middle">Departure Date</th>
+        <th class="align-middle">Return Date</th>
+        <th class="align-middle">Destination</th>
+        <th class="align-middle">Purpose</th>
+        <th class="align-middle">Status</th>
+        <th class="align-middle">Submission Time</th>
+        <th class="align-middle">Last Updated</th>
+    <!--    <th colspan="3">Action</th> -->
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @expense_reports.each do |expense_report| %>
+      <% if expense_report.empID == current_account.empID %>
+          <tr>
+            <td><%= expense_report.tripNum %></td>
+            <td><%= expense_report.formNum %></td>
+            <td><%= expense_report.departDate %></td>
+            <td><%= expense_report.returnDate %></td>
+            <td><%= expense_report.destination %></td>
+            <td><%= expense_report.purpose %></td>
+            <td><%= expense_report.status %></td>
+            <td><%= expense_report.created_at %></td>
+            <td><%= expense_report.updated_at %></td>
+            <!--
+            <td><%= link_to 'Show', expense_report %></td>
+            <td><%= link_to 'Edit', edit_expense_report_path(expense_report) %></td>
+            <td><%= link_to 'Destroy', expense_report, method: :delete, data: { confirm: 'Are you sure?' } %></td> -->
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+
+  <br>
+<!--
+  <%= link_to 'New Expense Report', new_expense_report_path %> -->
+  <br>
+  <br>
+
+
+  <% else %>
+    <br>
+    <h3>Please sign in*.</h3>
+    <h4>*If admin, please sign in with user account.</h4>
+  <% end %>
+
+  <% if current_account && current_account.accountable_type == "BudgetApprover"%>
+
+  <h2>Department Expenses to Review</h2>
+  <table class="table table-striped" style="width: 90%;">
+    <thead class="thead-dark">
+      <tr>
+        <th class="align-middle">Amount</th>
+        <th class="align-middle">Approval</th>
+        <th class="align-middle">Link</th>
+        <th class="align-middle">Submission Time</th>
+        <th class="align-middle">Last Updated</th>
+        <th colspan="3">Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+        <% @sources.each do |source| %>
+          <% @expenses.each do |expense|%>
+          <% if source.department == current_account.deptNum %>
+            <% if source.expense_id == expense.id %>
+              <tr>
+                <td><%= source.amount %></td>
+                <td><%= source.approval %></td>
+           <% @travel_authorizations.each do |travel| %>
+              <% if expense.travel_authorization_id == travel.id %>
+                <td><%= link_to expense.travel_authorization_id, edit_travel_authorization_path(travel) %></td>
+              <%end%>
+            <%end%>
+            <% @expense_reports.each do |expense_report| %>
+              <% if expense.expense_report_id == expense_report.id %>
+                <td><%= link_to expense.expense_report_id, edit_expense_report_path(expense_report) %></td>
+              <%end%>
+            <%end%>
+                <td><%= source.created_at %></td>
+                <td><%= source.updated_at %></td>
+              </tr>
+            <%end%>
+          <%end%>
+        <%end%>
+      <%end%>
+    </tbody>
+  </table>
+  <%end%>
+
+  <% if current_account && current_account.accountable_type == "PaymentManager"%>
+  <h2>Expense Reports Awaiting Approval</h2>
+  <table class="table table-striped" style="width: 90%;">
+    <thead class="thead-dark">
+      <tr>
+        <th class="align-middle">Trip Number</th>
+        <th class="align-middle">Form Number</th>
+        <th class="align-middle">Approval</th>
+        <th class="align-middle">Submission Time</th>
+        <th class="align-middle">Last Updated</th>
+        <th colspan="3">Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @expense_reports.each do |expense_report| %>
+      <% if expense_report.status == "Budget Approved, Final Approval Pending" %>
+          <tr>
+            <td><%= expense_report.tripNum %></td>
+            <td><%= expense_report.formNum %></td>
+            <td><%= expense_report.status %></td>
+            <td><%= expense_report.created_at %></td>
+            <td><%= expense_report.updated_at %></td>
+            <td><%= link_to 'Approve/Deny', edit_expense_report_path(expense_report) %></td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+
+  <h2>Expense Reports Previously Approved</h2>
+  <table class="table table-striped" style="width: 90%;">
+    <thead class="thead-dark">
+      <tr>
+        <th class="align-middle">Trip Number</th>
+        <th class="align-middle">Form Number</th>
+        <th class="align-middle">Approval</th>
+        <th class="align-middle">Submission Time</th>
+        <th class="align-middle">Last Updated</th>
+        <th colspan="3">Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @expense_reports.each do |expense_report| %>
+      <% if expense_report.status == "Approved" %>
+          <tr>
+            <td><%= expense_report.tripNum %></td>
+            <td><%= expense_report.formNum %></td>
+            <td><%= expense_report.status %></td>
+            <td><%= expense_report.created_at %></td>
+            <td><%= expense_report.updated_at %></td>
+            <td><%= link_to 'Show', expense_report %></td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+
+  <h2>Approved Travel Authorizatons</h2>
+  <table class="table table-striped" style="width: 90%;">
+    <thead class="thead-dark">
+      <tr>
+        <th class="align-middle">Trip Number</th>
+        <th class="align-middle">Form Number</th>
+        <th class="align-middle">Approval</th>
+        <th class="align-middle">Submission Time</th>
+        <th class="align-middle">Last Updated</th>
+        <th colspan="3">Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @travel_authorizations.each do |travel| %>
+        <% if travel.status == "Approved" %>
+          <td><%=travel.tripNum%></td>
+          <td><%=travel.formNum%></td>
+          <td><%=travel.status%></td>
+          <td><%=travel.created_at%></td>
+          <td><%=travel.updated_at%></td>
+          <td><%= link_to 'Show', travel %></td>
+        <% end %>
+      <%end%>
+    </tbody>
+  </table>
+  <%end%>
+</div>

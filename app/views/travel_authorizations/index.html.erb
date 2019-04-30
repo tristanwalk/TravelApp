@@ -1,0 +1,81 @@
+<style type="text/css">
+  html{
+    margin: auto;
+  }
+
+  main{
+    margin-top: 30px;    
+  }
+
+  h1, h2{
+    text-align: left;
+    font-family: Impact, Charcoal, sans-serif;
+    margin-left: 5%;
+  }
+
+  .center{
+    text-align: center;
+  }
+
+  table {
+    text-align: center;
+    margin: auto;
+    font-size:12px;
+  }  
+
+  th{
+    border-right-color: white; 
+    border-right: solid; 
+  }
+
+</style>
+<div class=center>
+<% if notice %>
+<aside id="notice"><%= notice %></aside>
+<% end %>
+
+<h1>Travel Authorizations</h1>
+
+<table class="table table-striped" style="width: 90%;">
+  <thead class="thead-dark">
+    <tr>
+      <th class="align-middle">Trip Number</th>
+      <th class="align-middle">Form Number</th>
+      <th class="align-middle">Departure Date</th>
+      <th class="align-middle">Return Date</th>
+      <th class="align-middle">Destination</th>
+      <th class="align-middle">Purpose</th>
+      <th class="align-middle">Status</th>
+      <th class="align-middle">Submission Time</th>
+      <th class="align-middle">Last Updated</th>
+      <th class="align-middle" colspan="3">Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @travel_authorizations.each do |travel_authorization| %>
+      <% if travel_authorization.empID == current_account.empID %>
+        <tr>
+          <td><%= travel_authorization.tripNum  %></td>
+          <td><%= travel_authorization.formNum  %></td>
+          <td><%= travel_authorization.departDate  %></td>
+          <td><%= travel_authorization.returnDate  %></td>
+          <td><%= travel_authorization.destination  %></td>
+          <td><%= travel_authorization.purpose  %></td>
+          <td><%= travel_authorization.status  %></td>
+          <td><%= travel_authorization.created_at  %></td>
+          <td><%= travel_authorization.updated_at  %></td>
+          
+          <td><%= link_to 'Show', travel_authorization %></td>
+          <td><%= link_to 'Edit', edit_travel_authorization_path(travel_authorization) %></td>
+          <td><%= link_to 'Destroy', travel_authorization, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Travel Authorization', new_travel_authorization_path %>
+</div>

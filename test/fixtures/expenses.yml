@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  expense: MyString
+  amount: 1
+  approval: MyString
+  travel_authorization: one
+
+two:
+  expense: MyString
+  amount: 1
+  approval: MyString
+  travel_authorization: two

@@ -1,0 +1,41 @@
+<% if notice %>
+<aside id="notice"><%= notice %></aside>
+<% end %>
+
+<p>
+  <strong>Firstname:</strong>
+  <%= @payment_manager.firstName %>
+</p>
+
+<p>
+  <strong>Lastname:</strong>
+  <%= @payment_manager.lastName %>
+</p>
+
+<p>
+  <strong>Username:</strong>
+  <%= @payment_manager.username %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @payment_manager.email %>
+</p>
+
+<p>
+  <strong>Password:</strong>
+  <%= @payment_manager.password %>
+</p>
+
+<p>
+  <strong>Forms:</strong>
+  <%= @payment_manager.forms %>
+</p>
+
+<p>
+  <strong>Empid:</strong>
+  <%= @payment_manager.empID %>
+</p>
+
+<%= link_to 'Edit', edit_payment_manager_path(@payment_manager) %> |
+<%= link_to 'Back', payment_managers_path %>

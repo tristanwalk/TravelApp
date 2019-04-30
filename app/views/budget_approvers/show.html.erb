@@ -1,0 +1,46 @@
+<% if notice %>
+<aside id="notice"><%= notice %></aside>
+<% end %>
+
+<p>
+  <strong>Firstname:</strong>
+  <%= @budget_approver.firstName %>
+</p>
+
+<p>
+  <strong>Lastname:</strong>
+  <%= @budget_approver.lastName %>
+</p>
+
+<p>
+  <strong>Username:</strong>
+  <%= @budget_approver.username %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @budget_approver.email %>
+</p>
+
+<p>
+  <strong>Password:</strong>
+  <%= @budget_approver.password %>
+</p>
+
+<p>
+  <strong>Forms:</strong>
+  <%= @budget_approver.forms %>
+</p>
+
+<p>
+  <strong>Empid:</strong>
+  <%= @budget_approver.empID %>
+</p>
+
+<p>
+  <strong>Deptnum:</strong>
+  <%= @budget_approver.deptNum %>
+</p>
+
+<%= link_to 'Edit', edit_budget_approver_path(@budget_approver) %> |
+<%= link_to 'Back', budget_approvers_path %>

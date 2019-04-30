@@ -1,0 +1,8 @@
+<h1>Editing Expense Report</h1>
+<% if current_account && current_account.accountable_type == "Employee"%>
+<%= render 'form', expense_report: @expense_report %>
+<% elsif current_account && current_account.accountable_type == "BudgetApprover"  ||current_account && current_account.accountable_type == "PaymentManager"%>
+<%= render 'approve_form', expense_report: @expense_report %>
+<% end %>
+<%= link_to 'Show', @expense_report %> |
+<%= link_to 'Back', expense_reports_path %>

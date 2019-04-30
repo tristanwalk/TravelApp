@@ -1,0 +1,65 @@
+<tr class='nested-fields'>
+
+    <% if current_account && current_account.accountable_type == "BudgetApprover"%>
+    <td><%= form.text_field :expenseName, :readonly => true %></td>
+    <td><%= form.number_field :expectedAmount, :readonly => true %></td>
+    <td><%= form.number_field :actualAmount, :readonly => true %></td>
+        <td><%= form.text_field :approval, :readonly => true %></td>
+    <% else %>
+      <td><%= form.text_field :expenseName %></td>
+      <td><%= form.number_field :expectedAmount %></td>
+      <td><%= form.number_field :actualAmount %></td>
+      <td><%= link_to_remove_association "remove expense", form %></td>
+      <% end %>
+</tr>
+<tr>
+    <td colspan="3">
+
+            <table class='table'>
+            <thead>
+              <tr>
+                <th>Image</th>
+                <th>Image Url</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody class='receipts'>
+              <%= form.fields_for :receipts do |receipt| %>
+                <%= render 'receipt_fields', :form => receipt %>
+              <% end %>
+            </tbody>
+          </table>
+            <% if current_account && current_account.accountable_type == "Employee"%>
+          <div class='links'>
+              <%= link_to_add_association 'add receipt', form, :receipts, form_name: 'form', data: { association_insertion_method: :before } %>
+            </div>
+
+            <% end %>
+        </td>
+
+</tr>
+<tr>
+	<td colspan="3">
+	<table class="table">
+      <thead>
+        <tr>
+          <th>Source</th>
+          <th>Amount</th>
+          <% if current_account && current_account.accountable_type == "BudgetApprover"%>
+            <th>Action</th>
+          <%end%>
+        </tr>
+      </thead>
+      <tbody class='sources'>
+        <%= form.fields_for :sources do |source| %>
+          <%= render 'source_fields', :form => source %>
+        <% end %>
+      </tbody>
+  </table>
+  <% if current_account && current_account.accountable_type == "Employee"%>
+  <div class='links'>
+    <%= link_to_add_association 'add source', form, :sources, form_name: 'form', data: {  association_insertion_method: :before } %>
+  </div>
+  <% end %>
+</td>
+</tr>

@@ -36,13 +36,15 @@ class HomeController < ApplicationController
   private
   def set_empID
     current_account.empID = current_account.id
+    current_account.accountable.empID = current_account.id
+    current_account.accountable.empID
     current_account.save
   end
 
   def set_travel_authorizations_and_expense_reports
      if current_account && current_account.accountable_type != "SuperAccount"
-      @travel_authorizations = TravelAuthorization.where(empID: current_account.accountable.empID)
-      @expense_reports = ExpenseReport.where(empID: current_account.accountable.empID)
+      @travel_authorizations = TravelAuthorization.where(empID: current_account.empID)
+      @expense_reports = ExpenseReport.where(empID: current_account.empID)
      end
   end
 end

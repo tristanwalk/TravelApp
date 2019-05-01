@@ -109,7 +109,7 @@ class TravelAuthorizationsController < ApplicationController
       @travel_authorization = TravelAuthorization.find(params[:id])
 
       if current_account && current_account.accountable_type == "Employee"
-        if @travel_authorization.empID != current_account[:empID]
+        if @travel_authorization.empID != current_account.empID
           invalid_travel_auth
         end
       end

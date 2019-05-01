@@ -6,91 +6,84 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-TravelAuthorization.create!(firstName: 'Bob', lastName: 'Jim',empID: '1',
- tripNumber: '1', deptNumber: '1', formNumber: '1', departureDate: 'DateTime.parse("04/05/2019")',
- submissionTime: 'DateTime.parse("04/04/2019 15:00")', returnDate: 'DateTime.parse("04/13/2019")', 
- destination: 'Atlanta', purpose: 'Meeting', 
- expenses: 'Rental Vechicle and Meals', sources: 'NA', status: 'true')
-
-TravelAuthorization.create!(firstName: 'Jon', lastName: 'Michael',empID: '2',
- tripNumber: '2', deptNumber: '2', formNumber: '2', departureDate: 'DateTime.parse("04/06/2019")',
- submissionTime: 'DateTime.parse("04/05/2019 13:00")', returnDate: 'DateTime.parse("04/15/2019")', 
- destination: 'NewYork', purpose: 'Conference', 
- expenses: 'Airfare, Meals and Other Transportation', sources: 'NA', status: 'false')
-
-PaymentManager.create!(firstName: 'Teemo', lastName: 'Park', username: 'teemo1', 
-	email: 'teemo@example.com', password: 'teemoEmail', forms: 'form1', empID: '3') 
-
-PaymentManager.create!(firstName: 'Amy', lastName: 'Hong', username: 'amy1', 
-	email: 'amy@example.com', password: 'amyEmail', forms: 'form2', empID: '4')
-
-ExpenseReport.create!(reciepts:'NA', tripNum: '1', firstName: 'Bob', lastName: 'Jim',
-	empID: '1', deptNum: '1', formNum: '1', 
-	deptDate: 'DateTime.parse("04/05/2019")', submissionTime: 'DateTime.parse("04/04/2019 15:00")', 
-	destination: 'Atlanta', purpose: 'Meeting', expenses:'Rental Vechicle and Meals', 
-	sources: 'NA', status: 'true')
-
-ExpenseReport.create!(reciepts:'NA', tripNum: '2', firstName: 'Jon', lastName: 'Michael',
-	empID: '2', deptNum: '2', formNum: '2', 
-	deptDate: 'DateTime.parse("04/06/2019")', submissionTime: 'DateTime.parse("04/05/2019 13:00")', 
-	destination: 'NewYork', purpose: 'Conference', expenses:'Airfare, Meals and Other Transportation', 
-	sources: 'NA', status: 'false')
-
-Employee.create!(firstName: 'Bob', lastName: 'Jim', username: 'bob1',
-	email: 'bob@example.com', password: 'bobEmail', forms: 'NA', empID: '1', deptNum: '1')
-
-Employee.create!(firstName: 'Jon', lastName: 'Michael', username: 'jon1',
-	email: 'jon@example.com', password: 'jonEmail', forms: 'NA', empID: '2', deptNum: '2')
-
-BudgetApprover.create!(firstName: 'Bugun', lastName: 'Choi', username: 'skekrhrh', 
-	email: 'bugun@example.com', password: 'bugunEmail', 
-	forms: 'form1', empID: '5', deptNum: '5')
-
-BudgetApprover.create!(firstName: 'Groot', lastName: 'Jay', username: 'groot1', 
-	email: 'groot@example.com', password: 'grootEmail', 
-	forms: 'form2', empID: '6', deptNum: '6')
-
 TravelAuthorization.delete_all
 PaymentManager.delete_all
 Employee.delete_all
 ExpenseReport.delete_all
 BudgetApprover.delete_all
 Account.delete_all
+Department.delete_all
+Expense.delete_all
+Source.delete_all
 
-Employee.create!(firstName: 'Bob', lastName: 'Jim', email: 'bob@example.com', empID: '1', deptNum: '1')
+Employee.create!(firstName: 'Emily', lastName: 'Emily', email: 'emily@test.com', empID: '1', deptNum: '1')
+Employee.create!(firstName: 'Eric', lastName: 'Eric',email: 'jon@example.com', empID: '2', deptNum: '2')
 
-Employee.create!(firstName: 'Jon', lastName: 'Michael', email: 'jon@example.com', empID: '2', deptNum: '2')
+BudgetApprover.create!(firstName: 'Bob', lastName: 'Bob', email: 'bob@test.com',
+	empID: '3', deptNum: '1')
+BudgetApprover.create!(firstName: 'Bric', lastName: 'Bric', email: 'bric@test.com',
+	empID: '4', deptNum: '2')
 
-BudgetApprover.create!(firstName: 'Bugun', lastName: 'Choi', email: 'bugun@example.com', empID: '5', deptNum: '5')
+PaymentManager.create!(firstName: 'Paul', lastName: 'Paul', email: 'paul@test.com',
+	empID: '5', deptNum: '1')
 
-BudgetApprover.create!(firstName: 'Groot', lastName: 'Jay', email: 'groot@example.com', empID: '6', deptNum: '6')
+Account.create!(firstName: 'Emily', lastName: 'Emily', empID: '1', deptNum: '1', email: 'emily@test.com',
+	password:'test12', :accountable => Employee.find_by(firstName: "Emily"))
+Account.create!(firstName: 'Eric', lastName: 'Eric', empID: '2', deptNum: '2', email: 'eric@test.com',
+	password:'test12', :accountable => Employee.find_by(firstName: "Eric"), accountable_id: '2')
+Account.create!(firstName: 'Bob', lastName: 'Bob', empID: '3', deptNum: '1', email: 'bob@test.com',
+	password:'test12', :accountable => BudgetApprover.find_by(firstName: "Bob"))
+Account.create!(firstName: 'Bric', lastName: 'Bric', empID: '4', deptNum: '2', email: 'bric@test.com',
+	password:'test12', :accountable => BudgetApprover.find_by(firstName: "Bric"))
+Account.create!(firstName: 'Paul', lastName: 'Paul', empID: '5', deptNum: '1', email: 'paul@test.com',
+	password:'test12', :accountable => PaymentManager.find_by(firstName: "Paul"))
 
-PaymentManager.create!(firstName: 'Amy', lastName: 'Hong', email: 'amy@example.com', empID: '4', deptNum: '0')
+Department.create!(currentBudget: '1000', totalBudget: '1000', name: 'CS', deptNum: '1')
+Department.create!(currentBudget: '500', totalBudget: '1000', name: 'CIS', deptNum: '2')
 
-Account.create!( :firstName => 'Bob', :lastName => 'Jim', :empID => 1, :deptNum => 1, :email => 'bob@example.com', :password => 'bobEmail', :password_confirmation => 'bobEmail', 
-                  :accountable => Employee.find_by(firstName: "Bob"))
-Account.create!( :firstName => 'Jon', :lastName => 'Michael', :empID => 2, :deptNum => 2, :email => 'jon@example.com', :password => 'jonEmail', :password_confirmation => 'jonEmail', 
-                  :accountable => Employee.find_by(firstName: "Jon"))
-Account.create!( :firstName => 'Bugun', :lastName => 'Choi', :empID => 5, :deptNum => 5, :email => 'bugun@example.com', :password => 'bugunEmail', :password_confirmation => 'bugunEmail', 
-                  :accountable => BudgetApprover.find_by(firstName: "Bugun"))
-Account.create!( :firstName => 'Groot', :lastName => 'Jay', :empID => 6, :deptNum => 6, :email => 'groot@example.com', :password => 'grootEmail', :password_confirmation => 'grootEmail', 
-                  :accountable => BudgetApprover.find_by(firstName: "Groot"))
-Account.create!( :firstName => 'Amy', :lastName => 'Hong', :empID => 4, :deptNum => 0, :email => 'amy@example.com', :password => 'amyEmail', :password_confirmation => 'amyEmail', 
-                  :accountable => PaymentManager.find_by(firstName: "Amy"))
+TravelAuthorization.create!(firstName: 'Emily', lastName: 'Emily',empID: '1',
+ tripNum: '1', deptNum: '1', formNum: '1', departDate: 'DateTime.parse("25/04/2020")',
+ returnDate: 'DateTime.parse("30/04/2020")', destination: 'Atlanta', purpose: 'Meeting', 
+ status: 'Pending')
+TravelAuthorization.create!(firstName: 'Eric', lastName: 'Eric',empID: '2',
+ tripNum: '2', deptNum: '2', formNum: '2', departDate: 'DateTime.parse("06/04/2020")',
+ returnDate: 'DateTime.parse("10/04/2020")', destination: 'NewYork', purpose: 'Conference', 
+ status: 'Pending')
 
-TravelAuthorization.create!(firstName: 'Bob', lastName: 'Jim', empID: 1, tripNum: '1', deptNum: 1, formNum: '1', 
- departDate: 'DateTime.parse("04/05/2019")', returnDate: 'DateTime.parse("04/13/2019")', destination: 'Atlanta', 
- purpose: 'Meeting')
+ExpenseReport.create!(tripNum: '1', firstName: 'Emily', lastName: 'Emily',
+	empID: '1', deptNum: '1', formNum: '1', departDate: 'DateTime.parse("25/04/2020")',
+	returnDate: 'DateTime.parse("30/04/2020")', destination: 'Atlanta',
+	purpose: 'Meeting', status: 'Pending')
+ExpenseReport.create!(tripNum: '2', firstName: 'Eric', lastName: 'Eric',
+	empID: '2', deptNum: '2', formNum: '2', departDate: 'DateTime.parse("06/04/2020")',
+	returnDate: 'DateTime.parse("10/04/2020")', destination: 'NewYork',
+	purpose: 'Conference', status: 'Pending')
 
-TravelAuthorization.create!(firstName: 'Jon', lastName: 'Michael', empID: '2', tripNum: '2', deptNum: '2', 
- formNum: '2', departDate: 'DateTime.parse("04/06/2019")', returnDate: 'DateTime.parse("04/15/2019")', 
- destination: 'New York', purpose: 'Conference')
+Expense.create!(expenseName: 'Meal', expectedAmount: '200', actualAmount: '150', approval: 'Pending',
+	travel_authorization_id: '1', expense_report_id: '1')
+Expense.create!(expenseName: 'Rent', expectedAmount: '250', actualAmount: '200', approval: 'Pending',
+	travel_authorization_id: '1', expense_report_id: '1')
+Expense.create!(expenseName: 'Hotel', expectedAmount: '300', actualAmount: '300', approval: 'Pending',
+	travel_authorization_id: '2', expense_report_id: '2')
+Expense.create!(expenseName: 'Airfare', expectedAmount: '350', actualAmount: '250', approval: 'Pending',
+	travel_authorization_id: '2', expense_report_id: '2')
 
-ExpenseReport.create!(tripNum: '1', firstName: 'Bob', lastName: 'Jim', empID: '1', deptNum: '1', formNum: '3', 
-	departDate: 'DateTime.parse("04/05/2019")', returnDate: 'DateTime.parse("04/13/2019")', 
-	destination: 'Atlanta', purpose: 'Meeting')
+Source.create!(department: '1', amount: '150', approval: 'Pending', travel_authorization_id: '1', expense_report_id: '1',
+	expense_id: '1')
+Source.create!(department: '2', amount: '50', approval: 'Pending', travel_authorization_id: '1', expense_report_id: '1',
+	expense_id: '1')
 
-ExpenseReport.create!(tripNum: '2', firstName: 'Jon', lastName: 'Michael', empID: '2', deptNum: '2', formNum: '4', 
-	departDate: 'DateTime.parse("04/06/2019")', returnDate: 'DateTime.parse("04/15/2019")', 
-	destination: 'NewYork', purpose: 'Conference')
+Source.create!(department: '1', amount: '50', approval: 'Pending', travel_authorization_id: '1', expense_report_id: '1',
+	expense_id: '2')
+Source.create!(department: '2', amount: '200', approval: 'Pending', travel_authorization_id: '1', expense_report_id: '1',
+	expense_id: '2')
 
+Source.create!(department: '1', amount: '100', approval: 'Pending', travel_authorization_id: '2', expense_report_id: '2',
+	expense_id: '3')
+Source.create!(department: '2', amount: '200', approval: 'Pending', travel_authorization_id: '2', expense_report_id: '2',
+	expense_id: '3')
+
+Source.create!(department: '1', amount: '150', approval: 'Pending', travel_authorization_id: '2', expense_report_id: '2',
+	expense_id: '4')
+Source.create!(department: '2', amount: '200', approval: 'Pending', travel_authorization_id: '2', expense_report_id: '2',
+	expense_id: '4')
